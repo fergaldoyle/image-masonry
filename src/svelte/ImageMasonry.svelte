@@ -5,24 +5,6 @@
   import LazyImage from './LazyImage.svelte';
   import { debounce } from '../common/utils';
 
-  function makeStyle({ scaledWidth, scaledHeight, isLastInRow, isLastRow }) {
-    let mr = padding + 'px';
-    const mb = isLastRow ? '0' : mr;
-    let flex = `0 0 ${scaledWidth}px`;
-    if (isLastInRow) {
-      mr = '0';
-      flex = `1 1 ${scaledWidth-4}px`;
-    }
-    return `height:${scaledHeight}px; flex: ${flex}; margin-right:${mr}; margin-bottom: ${mb}`;
-  }
-
-  function onClick(index) {
-    dispatch('image-click', {
-      image: images[index],
-      index
-    });
-  }
-
   const dispatch = createEventDispatcher();
 
   // props
@@ -43,6 +25,24 @@
       containerWidth: width,
       targetHeight: targetRowHeight,
       padding
+    });
+  }
+
+  function makeStyle({ scaledWidth, scaledHeight, isLastInRow, isLastRow }) {
+    let mr = padding + 'px';
+    const mb = isLastRow ? '0' : mr;
+    let flex = `0 0 ${scaledWidth}px`;
+    if (isLastInRow) {
+      mr = '0';
+      flex = `1 1 ${scaledWidth-4}px`;
+    }
+    return `height:${scaledHeight}px; flex: ${flex}; margin-right:${mr}; margin-bottom: ${mb}`;
+  }
+
+  function onClick(index) {
+    dispatch('image-click', {
+      image: images[index],
+      index
     });
   }
 
@@ -69,8 +69,8 @@
   <div class="image-masonry-container" style="width: {width}px">
     {#each scaledImages as image (image.src)}
       <div class="masonry-item" style={makeStyle(image)} on:click={()=>onClick(image.index)}>
-        <LazyImage {...image} />
         <slot image={image}></slot>
+        <LazyImage {...image} />
       </div>
     {/each}
   </div>

@@ -79,6 +79,7 @@ if (env === 'react' || env === 'react-advanced') {
 if (env === 'svelte' || env === 'svelte-advanced') {
   input = `docs/src/svelte/${ env === 'svelte' ? 'basic' : 'advanced' }.js`;
   plugins.push(
+    svg(),
     svelte({
       preprocess: {
         style: svelteLess()

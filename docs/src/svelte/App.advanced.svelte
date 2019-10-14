@@ -1,7 +1,12 @@
 <script>
   import ImageMasonry from '../../../src/svelte/ImageMasonry.svelte';
+  import ImageOverlay from './components/ImageOverlay.svelte';
   import sampleImages from '../images-advanced';
   import openPhotoSwipe from '../../photoswipe/index';
+
+  let element;
+  let images = sampleImages;
+  let targetRowHeight = 220;
 
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -26,10 +31,6 @@
     });
   }
 
-  let element;
-  let images = sampleImages;
-  let targetRowHeight = 220;
-
   function onChangeImages() {
     const newArray = [...sampleImages];
     shuffleArray(newArray);
@@ -48,19 +49,6 @@
 </div>
 <div bind:this={element}>
   <ImageMasonry images={images} targetRowHeight={targetRowHeight} on:image-click={onClick} let:image={image}>
-    <div class="image-overlay">
-      <div class="image-text">{image.title}</div>
-    </div>
+    <ImageOverlay image={image}></ImageOverlay>
   </ImageMasonry>
 </div>
-
-<style lang="less">
-  @import 'docs/src/style/image-overlay.less';
-  .image-overlay {
-    @image-overlay();
-  }
-
-  .image-text {
-    @image-text();
-  }
-</style>

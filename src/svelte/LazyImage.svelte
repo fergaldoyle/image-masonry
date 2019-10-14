@@ -3,11 +3,6 @@
   import { cache } from './cache';
   import whenElementVisible from '../common/when-element-visible';
 
-  function onLoad() {
-    cache[src] = true;
-    isLoaded = true;
-  }
-
   // props
   export let src = '';
   export let srcset = '';
@@ -21,6 +16,11 @@
   if(cache[src]) {
     isLoaded = true;
     isVisible = true;
+  }
+
+  function onLoad() {
+    cache[src] = true;
+    isLoaded = true;
   }
 
   onMount(() => {
